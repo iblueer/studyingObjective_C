@@ -7,27 +7,39 @@
 //
 
 #include <stdio.h>
-#include <stdlib.h>//malloc和free都源自stdlib
+
+
+//声明Person结构
+typedef struct{
+    float heightInMeters;
+    int weightInKilos;
+}Person;
+
+float bodyMassIndex(Person *p)
+{
+    return p->weightInKilos / (p->heightInMeters * p->heightInMeters);
+}
 
 int main(int argc, const char * argv[]) {
-    //声明指针变量
-    float *startOfBuffer;
+    //为一个person结构分配内存
+    Person *x = (Person *)malloc(Person);
 
 
-    //从堆分配指定字节数的内存
-    startOfBuffer = malloc(1000 * sizeof(float));
+    //为该结构的两个成员变量赋值
+    x->weightInKilos = 96;
+    x->heightInMeters = 1.8;
 
 
-    //...使用缓冲区...
+    //计算并输出BMI
+    float xBMI = bodyMassIndex(x);
+    printf("x has a BMI of %f\n", xBMI);
 
-    
-    //释放之前分配到的内存，使之能够被重新利用
-    free(startOfBuffer);
+
+    //释放占用的内存，使之能够被重用
+    free(x);
 
 
     //将指针变量赋为空
-    startOfBuffer = NULL;
-
-
+    x = NULL;
     return 0;
 }
